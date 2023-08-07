@@ -38,3 +38,38 @@ df.loc[[0,1]]
 
 ```
 
+```
+
+import numpy as np
+np_array = np.array([1,2,4,2])
+np_array
+array([1, 2, 4, 2])
+pd_series = pd.Series(np_array)
+pd_series
+0    1
+1    2
+2    4
+3    2
+dtype: int32
+pd_series = pd.Series(np_array,index=['a','b','c','d'])
+                      
+pd_series
+                      
+a    1
+b    2
+c    4
+d    2
+dtype: int32
+pd_series['a]
+          
+SyntaxError: unterminated string literal (detected at line 1)
+pd_series['a']
+          
+1
+pd_series[['a','c']]
+          
+a    1
+c    4
+dtype: int32
+```
+
