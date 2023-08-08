@@ -72,4 +72,29 @@ a    1
 c    4
 dtype: int32
 ```
-
+### Excel
+```
+df = pd.read_excel(r'C:\Sample Data\data_1.xlsx')
+# use sheet number starting from 0
+df = pd.read_excel(r'C:\Sample Data\data_1.xlsx',sheet_name=0)
+# by name
+df = pd.read_excel(r'C:\Sample Data\data_1.xlsx',sheet_name='Orders')
+# can define header startign from row 0
+df = pd.read_excel(r'C:\Sample Data\data_1.xlsx',sheet_name='Orders',header=3)
+# We can create any col as index col like below
+df = pd.read_excel(r'C:\Sample Data\data_1.xlsx',sheet_name='Orders',header=3,index_col='Row ID')
+# To get the data types
+df.dtypes
+# To perform basic statistical operation use below command
+df.describe()
+# to list down all the columns
+df.columns
+# BY DEFAULT Pandas drop a row
+# by default inplace is false u need to define it true to make the changes visible to view level.
+df.drop('State',axis=1,inplace=True)
+# To add new column with certain operation
+df['Per Units Sales'] = df['Sales']/df['Quantity']
+# to write save the data in excel use below command
+df.to_excel('Path/filename')
+df.to_excel(r'C:\Sample Data\data_2.xlsx')
+```
