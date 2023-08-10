@@ -99,4 +99,6 @@ df.to_excel('Path/filename')
 df.to_excel(r'C:\Sample Data\data_2.xlsx')
 # If don't want to go with index drop in generated excel
 df.to_excel(r'C:\Sample Data\data_3.xlsx',index=False)
+# to display all the values
+pd.set_option('display.max_columns', None)
 ```
