@@ -1,4 +1,4 @@
-# Pandas
+# Pandas [Link](https://pandas.pydata.org/docs/user_guide/index.html#user-guide)
 
 - To get one or more rows use loc
 - df.to_string() to print entire dataframe
@@ -100,5 +100,38 @@ df.to_excel(r'C:\Sample Data\data_2.xlsx')
 # If don't want to go with index drop in generated excel
 df.to_excel(r'C:\Sample Data\data_3.xlsx',index=False)
 # to display all the values
+
 pd.set_option('display.max_columns', None)
+
+# to change the dtypes
+
+df['Postal Code'] = df['Postal Code'].astype(str)
 ```
+
+### Date
+```
+# to format the order date
+df['Order Date'] = pd.to_datetime(df['Order Date'],errors = 'raise',format = '%Y-%m-%d')
+# to extract year similart 'month'
+df['year'] = df['Order Date'].dt.year
+# to get the shipping date
+df["Shipping Date"] = df["Ship Date"] - df["Order Date"]
+# small b and cap B represt nov and November like that 
+df['String Date'] = df['Order Date'].dt.strftime('%B-%Y')
+```
+
+### Data
+```
+It checks whether it has any null or nan value and returns bool value
+df.isna()
+# to get the sum of all na values
+df.isna().sum()
+# row wise
+df.isna().sum(axis=1)
+# to get all the rows which has NAN values
+df[df.isna().sum(axis=1)>0]
+# how = any represent drop the row or col if it has null value
+# if all single value of row and col is null use how = all
+df.dropna(how='all',inplace=True)
+# fillna
+df.fillna(0,inplace=True)
