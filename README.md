@@ -135,3 +135,19 @@ df[df.isna().sum(axis=1)>0]
 df.dropna(how='all',inplace=True)
 # fillna
 df.fillna(0,inplace=True)
+```
+
+### To split the excel row wise using explode
+
+```
+# The pandas explode() method is used to transform each element of a list-like structure (such as Python lists, tuples, sets, or NumPy arrays) to a separate row.
+df.to_excel('C:\Sample Data\Python1.xlsx',index=False)
+  
+df = pd.read_excel(r'C:\Sample Data\Book4.xlsx',header=1)
+  
+df['ColName'] = df['ColName'].str.split(', ')
+  
+df= df.explode('ColName')
+  
+df.to_excel('C:\Sample Data\Python1.xlsx',index=False)
+```
