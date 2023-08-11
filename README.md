@@ -270,3 +270,25 @@ df
 3  8793   ORANGE AVAILABLE   DB
 4  8793      TEA AVAILABLE  TDS
 ```
+
+### Check of above back
+```
+import pandas as pd
+
+df = pd.read_excel(r'C:\HEB KPI\Book1.xlsx',header=0)
+               
+df['Report Detail [Table,filed & calculations]'] = df['Report Detail [Table,filed & calculations]'].str.split('\n')
+
+df= df.explode('Report Detail [Table,filed & calculations]')
+       
+df.to_excel('C:\LOCATION\Testing_v0.xlsx',index=False)
+
+lis = [ABCD, TEA]
+
+df['FLAG']=df['Names'].apply(lambda x: any([k in x for k in lis])).replace(True,'TDS').replace(False,'DB')
+
+df.to_excel('C:\Sample Data\Python1.xlsx',index=False)
+
+df1['FLAG']=df1['Report Detail'].apply(lambda x: any([k in str(x) for k in lis])).replace(True,'TDS').replace(False,'DB')
+
+```
