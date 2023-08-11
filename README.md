@@ -225,3 +225,38 @@ burritto  10.99       high        940.0     16%
 taco       6.99     medium          NaN     NaN
 burger     5.99       high          NaN     NaN
 ```
+
+# How to check something is there in list or not
+
+```
+import pandas as pd
+df = pd.DataFrame({'IDs':[1234,5346,1234,8793,8793],
+                    'Names':['APPLE ABCD ONE','APPLE ABCD','NO STRAWBERRY YES','ORANGE AVAILABLE','TEA AVAILABLE']})
+
+df
+    IDs              Names
+0  1234     APPLE ABCD ONE
+1  5346         APPLE ABCD
+2  1234  NO STRAWBERRY YES
+3  8793   ORANGE AVAILABLE
+4  8793      TEA AVAILABLE
+lis = [ABCD, TEA]
+df['Names'].apply(lambda x: any([k in x for k in lis]))
+  
+0     True
+1     True
+2    False
+3    False
+4     True
+Name: Names, dtype: bool
+df['FLAG']=df['Names'].apply(lambda x: any([k in x for k in lis]))
+  
+df
+  
+    IDs              Names   FLAG
+0  1234     APPLE ABCD ONE   True
+1  5346         APPLE ABCD   True
+2  1234  NO STRAWBERRY YES  False
+3  8793   ORANGE AVAILABLE  False
+4  8793      TEA AVAILABLE   True
+```
