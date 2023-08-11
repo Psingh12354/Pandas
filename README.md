@@ -259,4 +259,14 @@ df
 2  1234  NO STRAWBERRY YES  False
 3  8793   ORANGE AVAILABLE  False
 4  8793      TEA AVAILABLE   True
+
+df['FLAG']=df['Names'].apply(lambda x: any([k in x for k in lis])).replace(True,'Fine').replace(False,'Not Fine')
+df
+  
+    IDs              Names FLAG
+0  1234     APPLE ABCD ONE  TDS
+1  5346         APPLE ABCD  TDS
+2  1234  NO STRAWBERRY YES   DB
+3  8793   ORANGE AVAILABLE   DB
+4  8793      TEA AVAILABLE  TDS
 ```
