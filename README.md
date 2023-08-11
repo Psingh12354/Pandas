@@ -151,3 +151,77 @@ df= df.explode('ColName')
   
 df.to_excel('C:\Sample Data\Python1.xlsx',index=False)
 ```
+
+### Combining dataframe
+
+```
+nutrition = pd.DataFrame({"item":["pizza","pastry","burritto","salad","pasta"],
+                         "avg_calorie":[3200,800,940,240,740],
+                         "protein":["12%","4%","16%","6%","10%"]})
+menu = pd.DataFrame({"item":["pizza","pasta","salad","burritto","taco","burger"],
+                    "price":[14.99,12.99,7.99,10.99,6.99,5.99],
+                    "popularity":["high","medium","low","high","medium","high"]})
+# Concat will just concatenate the values. We can pass multiple dataset
+pd.concat([menu,nutrition],axis=1,ignore_index=False)
+# merge took common column and print the output work on intersection can perform left, right, outer and inner. by default inneer
+menu.merge(nutrition) 
+
+menu.merge(nutrition,how="inner")
+       item  price popularity  avg_calorie protein
+0     pizza  14.99       high         3200     12%
+1     pasta  12.99     medium          740     10%
+2     salad   7.99        low          240      6%
+3  burritto  10.99       high          940     16%
+
+menu.merge(nutrition,how="outer")
+       item  price popularity  avg_calorie protein
+0     pizza  14.99       high       3200.0     12%
+1     pasta  12.99     medium        740.0     10%
+2     salad   7.99        low        240.0      6%
+3  burritto  10.99       high        940.0     16%
+4      taco   6.99     medium          NaN     NaN
+5    burger   5.99       high          NaN     NaN
+6    pastry    NaN        NaN        800.0      4%
+
+menu.merge(nutrition,how="left")
+       item  price popularity  avg_calorie protein
+0     pizza  14.99       high       3200.0     12%
+1     pasta  12.99     medium        740.0     10%
+2     salad   7.99        low        240.0      6%
+3  burritto  10.99       high        940.0     16%
+4      taco   6.99     medium          NaN     NaN
+5    burger   5.99       high          NaN     NaN
+
+menu.merge(nutrition,how="right")
+       item  price popularity  avg_calorie protein
+0     pizza  14.99       high         3200     12%
+1    pastry    NaN        NaN          800      4%
+2  burritto  10.99       high          940     16%
+3     salad   7.99        low          240      6%
+4     pasta  12.99     medium          740     10%
+
+# use left on and right on if there is no common columns.
+menu.merge(nutrition,how="right",left_on="items",right_on="item")
+
+# Join is very similar to vlookup by default left
+
+menu.join(nutrition)
+      items  price popularity      item  avg_calorie protein
+0     pizza  14.99       high     pizza       3200.0     12%
+1     pasta  12.99     medium    pastry        800.0      4%
+2     salad   7.99        low  burritto        940.0     16%
+3  burritto  10.99       high     salad        240.0      6%
+4      taco   6.99     medium     pasta        740.0     10%
+5    burger   5.99       high       NaN          NaN     NaN
+
+# to perform default join properly use set_index. Otherwise output look like above.
+menu.set_index('items').join(nutrition.set_index('item'))
+          price popularity  avg_calorie protein
+items                                          
+pizza     14.99       high       3200.0     12%
+pasta     12.99     medium        740.0     10%
+salad      7.99        low        240.0      6%
+burritto  10.99       high        940.0     16%
+taco       6.99     medium          NaN     NaN
+burger     5.99       high          NaN     NaN
+```
