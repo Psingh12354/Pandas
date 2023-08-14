@@ -292,3 +292,106 @@ df.to_excel('C:\Sample Data\Python1.xlsx',index=False)
 df1['FLAG']=df1['Report Detail'].apply(lambda x: any([k in str(x) for k in lis])).replace(True,'TDS').replace(False,'DB')
 
 ```
+
+### Data Aggregation groupby
+```
+Excel approach- ALT + D + P + P to create a pivot table
+
+# To get to count for all the columns
+df.groupby('Region').count()
+# To get sum of element in specific column
+df.groupby(['Region'])['Profit'].sum()
+Region
+Central     39706.3625
+East        91522.7800
+South       46749.4303
+West       108418.4489
+Name: Profit, dtype: float64
+# for grouping multiple value
+df.groupby(['Region','Category'])['Profit'].sum()
+Region   Category       
+Central  Furniture          -2871.0494
+         Office Supplies     8879.9799
+         Technology         33697.4320
+East     Furniture           3046.1658
+         Office Supplies    41014.5791
+         Technology         47462.0351
+South    Furniture           6771.2061
+         Office Supplies    19986.3928
+         Technology         19991.8314
+West     Furniture          11504.9503
+         Office Supplies    52609.8490
+         Technology         44303.6496
+Name: Profit, dtype: float64
+```
+
+### Assignment
+```
+import pandas as pd
+import numpy as np
+df = pd.read_excel(r'C:\Sample Data\commute.xlsx',header=0,index_col="Date")
+df
+           Subway  Taxi  Bus Ferry
+Date                              
+2020-06-01    Yes     2    7   Yes
+2020-06-02    Yes     1    9   Yes
+2020-06-03    Yes     8   10   Yes
+2020-06-04     No     8    8   Yes
+2020-06-05     No     4    7   Yes
+...           ...   ...  ...   ...
+2020-11-06     No     4    8    No
+2020-11-07    Yes     1    7   Yes
+2020-11-08    Yes     7    7   Yes
+2020-11-09     No     8   13   Yes
+2020-11-10    Yes     5    7    No
+
+[163 rows x 4 columns]
+df.replace(['Yes','No'],[1,0])
+  
+            Subway  Taxi  Bus  Ferry
+Date                                
+2020-06-01       1     2    7      1
+2020-06-02       1     1    9      1
+2020-06-03       1     8   10      1
+2020-06-04       0     8    8      1
+2020-06-05       0     4    7      1
+...            ...   ...  ...    ...
+2020-11-06       0     4    8      0
+2020-11-07       1     1    7      1
+2020-11-08       1     7    7      1
+2020-11-09       0     8   13      1
+2020-11-10       1     5    7      0
+
+[163 rows x 4 columns]
+s = np.array(df)
+s
+df=df.replace(['Yes','No'],[1,0])
+s = np.array(df)
+s
+y = np.array([8,3,0.5,12])
+y
+array([ 8. ,  3. ,  0.5, 12. ])
+s.dot(y)
+array([29.5, 27.5, 49. , 40. , 27.5, 16.5, 30. , 38.5, 29. , 28. , 32. ,
+       30. , 30. , 48. , 33. , 45. , 38. , 28. , 24.5, 14. , 31. , 39. ,
+       38. , 24.5, 30. , 36.5, 39. , 48.5, 30.5, 28. , 32. , 33. , 41.5,
+       26.5, 25. , 20.5, 16.5, 21.5, 30.5, 27.5, 45. , 13. , 34.5, 21. ,
+       44. , 39. , 18.5, 36.5, 33.5, 36.5, 17. , 10. , 27. , 19. , 18.5,
+       42. , 46.5, 48.5, 39. , 26. , 21.5, 19.5, 26. , 48.5, 29.5, 24. ,
+       29. , 12. , 17.5, 31.5, 18. , 39.5, 17. , 29. , 22.5, 48. , 19.5,
+       33. , 15.5, 23. , 31. , 15. , 22.5, 23.5, 25.5, 39. ,  6. , 28.5,
+       42. , 21.5, 22.5, 46.5, 15.5, 21.5, 29. , 28. , 29. , 18. , 34. ,
+       35. , 30.5, 23. , 22.5, 37. , 45.5, 32.5,  7.5, 21. ,  7. , 32.5,
+       37. , 23. , 14.5, 39.5, 14.5, 35. , 22. , 18. , 33.5, 40. , 16.5,
+       19.5, 39.5, 17. , 19.5, 28. , 43. , 24.5, 43. , 24. , 25.5, 40. ,
+       13. , 25.5, 24. , 27. , 46. , 30.5, 21. , 15. , 26. , 24. , 27.5,
+       30. , 48. , 50.5, 40.5, 38.5, 25. , 13.5, 18.5, 27.5, 28. , 27. ,
+       20. , 18. , 13. , 43.5, 16. , 26.5, 44.5, 42.5, 26.5])
+daily_expense=s.dot(y)
+daily_expense.sum()
+4683.0
+daily_expense.argmax()
+145
+df.index[daily_expense.argmax()]
+Timestamp('2020-10-24 00:00:00')
+```
