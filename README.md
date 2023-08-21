@@ -395,3 +395,12 @@ daily_expense.argmax()
 df.index[daily_expense.argmax()]
 Timestamp('2020-10-24 00:00:00')
 ```
+### OS
+
+```
+import os
+os.getcwd()
+os.chdir('C:\\Sample Data\\')
+os.rmdir('')
+os.system('') # to open a file using python
+os.path.join(cwd,'Sample Data','Folder 1') # we can define the path 
