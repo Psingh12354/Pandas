@@ -403,4 +403,13 @@ os.getcwd()
 os.chdir('C:\\Sample Data\\')
 os.rmdir('')
 os.system('') # to open a file using python
-os.path.join(cwd,'Sample Data','Folder 1') # we can define the path 
+os.path.join(cwd,'Sample Data','Folder 1') # we can define the path
+import glob
+# glob is to import multiple file like below * is wildcard for all
+filenames = glob.glob('*')
+# it means start with any ends with any but in between it must have 2016
+filenames = glob.glob('*2016*')
+# to get all file with any extension like .xlsx
+glob.glob(cwd+'\\*\\*\\*.xlsx')
+
+
