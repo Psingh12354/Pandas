@@ -411,5 +411,47 @@ filenames = glob.glob('*')
 filenames = glob.glob('*2016*')
 # to get all file with any extension like .xlsx
 glob.glob(cwd+'\\*\\*\\*.xlsx')
+```
 
+### To list down all file in multiple folder according to there name pattern.
+```
+import os
+import glob
+
+os.chdir("D:\\Udemy\\Excel Automation\\assignment")
+
+cwd = os.getcwd()
+
+filenames = glob.glob("*.xlsx")
+
+for file in filenames:
+    year = file.split(".")[-2][-4:] # start from 2nd index in list and perform slicing
+    try:
+        int(year)
+    except:
+        continue
+    if os.path.isdir(year) == False:
+        os.mkdir(year)
+    
+    os.rename(file,os.path.join(cwd,year,file))
+```
+# to get data from multiple source and merge it in one excel.
+```
+import os
+import glob
+import pandas as pd
+
+os.chdir("D:\\Udemy\\Excel Automation\\assignment")
+
+cwd = os.getcwd()
+
+filenames = glob.glob(cwd+"\\*\\*xlsx")
+
+consolidated = pd.DataFrame(columns = pd.read_excel(filenames[0]).columns)
+for file in filenames:
+    temp = pd.read_excel(file)
+    consolidated = consolidated.append(temp, ignore_index = True)
+    
+consolidated.to_excel("consolidated.xlsx", index = False)
+```
 
