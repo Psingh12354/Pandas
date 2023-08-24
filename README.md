@@ -455,3 +455,21 @@ for file in filenames:
 consolidated.to_excel("consolidated.xlsx", index = False)
 ```
 
+### To delete a specific row with specific value from excel
+
+```
+df = pd.DataFrame(mydataset)
+df
+    cars  passings
+0    BMW         3
+1  Volvo         7
+2   Ford         2
+
+i = df[df.cars=='Volvo'].index
+i
+Index([1], dtype='int64')
+df.drop(i)
+   cars  passings
+0   BMW         3
+2  Ford         2
+```
