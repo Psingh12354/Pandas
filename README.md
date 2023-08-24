@@ -473,3 +473,20 @@ df.drop(i)
 0   BMW         3
 2  Ford         2
 ```
+### Distinct or unique to get unique value.
+
+```
+df.cars.unique()
+array(['BMW', 'Volvo', 'Ford'], dtype=object)
+#or
+np.unique(df[['col1','col2']], axis=0)
+#
+df.nunique()
+cars        3
+passings    3
+dtype: int64
+```
+### to drop duplicates
+```
+df.drop_duplicates()
+```
