@@ -490,3 +490,20 @@ dtype: int64
 ```
 df.drop_duplicates()
 ```
+
+### VLOOKUP in python
+```
+import os
+import pandas as pd
+
+os.chdir("D:\\Udemy\\Excel Automation")
+
+sales = pd.read_excel("sales_data.xlsx") #importing left dataframe
+
+zip_income = pd.read_csv("zipcode_income.csv", engine='python') # importing right dataframe
+
+temp = sales.merge(zip_income.loc[:,["Zip_Code","Mean"]].rename(columns={"Zip_Code":"Postal Code", "Mean":"Mean Income"})
+                   ,how="left",on="Postal Code") # merging the left df with relavant columns of the right df
+
+temp.drop_duplicates(subset=["Row ID"], keep ="first", inplace=True) # dropping duplicates
+```
