@@ -507,3 +507,166 @@ temp = sales.merge(zip_income.loc[:,["Zip_Code","Mean"]].rename(columns={"Zip_Co
 
 temp.drop_duplicates(subset=["Row ID"], keep ="first", inplace=True) # dropping duplicates
 ```
+
+### IF condition
+```
+# excel
+=IF(O2="Bookcases",U2*0.8,IF(O2="Chairs",U2*10))
+# Python
+import numpy as np
+df["Profit Percent"]=np.where(df['Category']=='Furniture',df['Per Units Sales']*0.5,np.where(df['Category']=='Office Supplies',df['Per Units Sales']*0.7,0))
+#or
+df['visits_category'] = np.where(df['visits_30days']== 0, 'YES', 'NO')
+```
+
+### Some more operations
+```
+df['Order ID']
+0       CA-2016-152156
+1       CA-2016-152156
+2       CA-2016-138688
+3       US-2015-108966
+4       US-2015-108966
+             ...      
+9989    CA-2014-110422
+9990    CA-2017-121258
+9991    CA-2017-121258
+9992    CA-2017-121258
+9993    CA-2017-119914
+Name: Order ID, Length: 9994, dtype: object
+# Slicing
+df['Order ID'].str[3:7]
+0       2016
+1       2016
+2       2016
+3       2015
+4       2015
+        ... 
+9989    2014
+9990    2017
+9991    2017
+9992    2017
+9993    2017
+Name: Order ID, Length: 9994, dtype: object
+df['Order ID'].str[-7:]
+0       -152156
+1       -152156
+2       -138688
+3       -108966
+4       -108966
+         ...   
+9989    -110422
+9990    -121258
+9991    -121258
+9992    -121258
+9993    -119914
+Name: Order ID, Length: 9994, dtype: object
+df['Order ID'].str[:2]
+0       CA
+1       CA
+2       CA
+3       US
+4       US
+        ..
+9989    CA
+9990    CA
+9991    CA
+9992    CA
+9993    CA
+Name: Order ID, Length: 9994, dtype: object
+
+# Split
+df['Order ID'].str.split('-')
+0       [CA, 2016, 152156]
+1       [CA, 2016, 152156]
+2       [CA, 2016, 138688]
+3       [US, 2015, 108966]
+4       [US, 2015, 108966]
+               ...        
+9989    [CA, 2014, 110422]
+9990    [CA, 2017, 121258]
+9991    [CA, 2017, 121258]
+9992    [CA, 2017, 121258]
+9993    [CA, 2017, 119914]
+Name: Order ID, Length: 9994, dtype: object
+
+#Split indexing
+df['Order ID'].str.split('-')[1]
+['CA', '2016', '152156']
+# Removinf extra spaces trim
+df['Order ID'].str.strip()
+0       CA-2016-152156
+1       CA-2016-152156
+2       CA-2016-138688
+3       US-2015-108966
+4       US-2015-108966
+             ...      
+9989    CA-2014-110422
+9990    CA-2017-121258
+9991    CA-2017-121258
+9992    CA-2017-121258
+9993    CA-2017-119914
+Name: Order ID, Length: 9994, dtype: object
+# Concatenate
+df['location'] = df['Country']+"_"+df["City"]
+# Upper and lower
+df['Category'].str.upper()
+   
+0             FURNITURE
+1             FURNITURE
+2       OFFICE SUPPLIES
+3             FURNITURE
+4       OFFICE SUPPLIES
+             ...       
+9989          FURNITURE
+9990          FURNITURE
+9991         TECHNOLOGY
+9992    OFFICE SUPPLIES
+9993    OFFICE SUPPLIES
+Name: Category, Length: 9994, dtype: object
+df['Category'].str.lower()
+   
+0             furniture
+1             furniture
+2       office supplies
+3             furniture
+4       office supplies
+             ...       
+9989          furniture
+9990          furniture
+9991         technology
+9992    office supplies
+9993    office supplies
+Name: Category, Length: 9994, dtype: object
+
+# Find
+df['Category'].str.find('Fur')
+   
+0       0
+1       0
+2      -1
+3       0
+4      -1
+       ..
+9989    0
+9990    0
+9991   -1
+9992   -1
+9993   -1
+Name: Category, Length: 9994, dtype: int64
+df['Category'].str.find('Fur').replace(-1,'Not Found')
+   
+0               0
+1               0
+2       Not Found
+3               0
+4       Not Found
+          ...    
+9989            0
+9990            0
+9991    Not Found
+9992    Not Found
+9993    Not Found
+Name: Category, Length: 9994, dtype: object
+
+```
