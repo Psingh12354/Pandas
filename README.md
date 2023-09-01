@@ -9,10 +9,18 @@
 - The fillna() method allows us to replace empty cells with a value ```df.fillna(130, inplace = True)```
 - We can assign the column a same data type like ```df['Date'] = pd.to_datetime(df['Date'])```
 - The duplicated() method returns a Boolean values for each row: ```print(df.duplicated())```
-- 
 
 
+```bash
+pip install markdown
 ```
+
+```python
+import markdown
+html = markdown.markdown(your_text_string)
+```
+
+```python
 import pandas
 mydataset = {
   'cars': ["BMW", "Volvo", "Ford"],
@@ -38,7 +46,7 @@ df.loc[[0,1]]
 
 ```
 
-```
+```python
 
 import numpy as np
 np_array = np.array([1,2,4,2])
@@ -73,7 +81,8 @@ c    4
 dtype: int32
 ```
 ### Excel
-```
+
+```python
 df = pd.read_excel(r'C:\Sample Data\data_1.xlsx')
 # use sheet number starting from 0
 df = pd.read_excel(r'C:\Sample Data\data_1.xlsx',sheet_name=0)
@@ -109,7 +118,7 @@ df['Postal Code'] = df['Postal Code'].astype(str)
 ```
 
 ### Date
-```
+```python
 # to format the order date
 df['Order Date'] = pd.to_datetime(df['Order Date'],errors = 'raise',format = '%Y-%m-%d')
 # to extract year similart 'month'
@@ -121,7 +130,7 @@ df['String Date'] = df['Order Date'].dt.strftime('%B-%Y')
 ```
 
 ### Data
-```
+```python
 It checks whether it has any null or nan value and returns bool value
 df.isna()
 # to get the sum of all na values
@@ -139,7 +148,7 @@ df.fillna(0,inplace=True)
 
 ### To split the excel row wise using explode
 
-```
+```python
 # The pandas explode() method is used to transform each element of a list-like structure (such as Python lists, tuples, sets, or NumPy arrays) to a separate row.
 df.to_excel('C:\Sample Data\Python1.xlsx',index=False)
   
@@ -154,7 +163,7 @@ df.to_excel('C:\Sample Data\Python1.xlsx',index=False)
 
 ### Combining dataframe
 
-```
+```python
 nutrition = pd.DataFrame({"item":["pizza","pastry","burritto","salad","pasta"],
                          "avg_calorie":[3200,800,940,240,740],
                          "protein":["12%","4%","16%","6%","10%"]})
@@ -228,7 +237,7 @@ burger     5.99       high          NaN     NaN
 
 # How to check something is there in list or not
 
-```
+```python
 import pandas as pd
 df = pd.DataFrame({'IDs':[1234,5346,1234,8793,8793],
                     'Names':['APPLE ABCD ONE','APPLE ABCD','NO STRAWBERRY YES','ORANGE AVAILABLE','TEA AVAILABLE']})
@@ -272,7 +281,7 @@ df
 ```
 
 ### Check of above back
-```
+```python
 import pandas as pd
 
 df = pd.read_excel(r'C:\HEB KPI\Book1.xlsx',header=0)
@@ -294,7 +303,7 @@ df1['FLAG']=df1['Report Detail'].apply(lambda x: any([k in str(x) for k in lis])
 ```
 
 ### Data Aggregation groupby
-```
+```python
 Excel approach- ALT + D + P + P to create a pivot table
 
 # To get to count for all the columns
@@ -326,7 +335,7 @@ Name: Profit, dtype: float64
 ```
 
 ### Assignment
-```
+```python
 import pandas as pd
 import numpy as np
 df = pd.read_excel(r'C:\Sample Data\commute.xlsx',header=0,index_col="Date")
@@ -397,7 +406,7 @@ Timestamp('2020-10-24 00:00:00')
 ```
 ### OS
 
-```
+```python
 import os
 os.getcwd()
 os.chdir('C:\\Sample Data\\')
@@ -414,7 +423,7 @@ glob.glob(cwd+'\\*\\*\\*.xlsx')
 ```
 
 ### To list down all file in multiple folder according to there name pattern.
-```
+```python
 import os
 import glob
 
@@ -436,7 +445,7 @@ for file in filenames:
     os.rename(file,os.path.join(cwd,year,file))
 ```
 # to get data from multiple source and merge it in one excel.
-```
+```python
 import os
 import glob
 import pandas as pd
@@ -457,7 +466,7 @@ consolidated.to_excel("consolidated.xlsx", index = False)
 
 ### To delete a specific row with specific value from excel
 
-```
+```python
 df = pd.DataFrame(mydataset)
 df
     cars  passings
@@ -475,7 +484,7 @@ df.drop(i)
 ```
 ### Distinct or unique to get unique value.
 
-```
+```python
 df.cars.unique()
 array(['BMW', 'Volvo', 'Ford'], dtype=object)
 #or
@@ -487,12 +496,12 @@ passings    3
 dtype: int64
 ```
 ### to drop duplicates
-```
+```python
 df.drop_duplicates()
 ```
 
 ### VLOOKUP in python
-```
+```python
 import os
 import pandas as pd
 
@@ -509,7 +518,7 @@ temp.drop_duplicates(subset=["Row ID"], keep ="first", inplace=True) # dropping 
 ```
 
 ### IF condition
-```
+```python
 # excel
 =IF(O2="Bookcases",U2*0.8,IF(O2="Chairs",U2*10))
 # Python
@@ -520,7 +529,7 @@ df['visits_category'] = np.where(df['visits_30days']== 0, 'YES', 'NO')
 ```
 
 ### Some more operations
-```
+```python
 df['Order ID']
 0       CA-2016-152156
 1       CA-2016-152156
@@ -673,7 +682,7 @@ Name: Category, Length: 9994, dtype: object
 
 # With conditions
 
-```
+```python
 import os
 import pandas as pd
 
