@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Excel Automation - sumif(s) and countif(s)
-
-@author: Mayank Rasu (http://rasuquant.com/wp/)
-"""
-
 import os
 import pandas as pd
 
