@@ -512,7 +512,7 @@ sales = pd.read_excel("sales_data.xlsx") #importing left dataframe
 zip_income = pd.read_csv("zipcode_income.csv", engine='python') # importing right dataframe
 
 temp = sales.merge(zip_income.loc[:,["Zip_Code","Mean"]].rename(columns={"Zip_Code":"Postal Code", "Mean":"Mean Income"})
-                   ,how="left",on="Postal Code") # merging the left df with relavant columns of the right df
+                   ,how="left",on="Postal Code") # merging the left df with relevant columns of the right df
 
 temp.drop_duplicates(subset=["Row ID"], keep ="first", inplace=True) # dropping duplicates
 ```
@@ -528,8 +528,9 @@ df["Profit Percent"]=np.where(df['Category']=='Furniture',df['Per Units Sales']*
 df['visits_category'] = np.where(df['visits_30days']== 0, 'YES', 'NO')
 ```
 
-### Some more operations
-```python
+## Some more operations
+```py
+#Ordered dataframe
 df['Order ID']
 0       CA-2016-152156
 1       CA-2016-152156
@@ -543,7 +544,9 @@ df['Order ID']
 9992    CA-2017-121258
 9993    CA-2017-119914
 Name: Order ID, Length: 9994, dtype: object
-# Slicing
+```
+### Slicing
+```py
 df['Order ID'].str[3:7]
 0       2016
 1       2016
@@ -557,6 +560,7 @@ df['Order ID'].str[3:7]
 9992    2017
 9993    2017
 Name: Order ID, Length: 9994, dtype: object
+
 df['Order ID'].str[-7:]
 0       -152156
 1       -152156
@@ -570,6 +574,7 @@ df['Order ID'].str[-7:]
 9992    -121258
 9993    -119914
 Name: Order ID, Length: 9994, dtype: object
+
 df['Order ID'].str[:2]
 0       CA
 1       CA
@@ -583,8 +588,10 @@ df['Order ID'].str[:2]
 9992    CA
 9993    CA
 Name: Order ID, Length: 9994, dtype: object
+```
 
-# Split
+### Split
+```
 df['Order ID'].str.split('-')
 0       [CA, 2016, 152156]
 1       [CA, 2016, 152156]
@@ -598,11 +605,16 @@ df['Order ID'].str.split('-')
 9992    [CA, 2017, 121258]
 9993    [CA, 2017, 119914]
 Name: Order ID, Length: 9994, dtype: object
+```
 
-#Split indexing
+### Split indexing
+```py
 df['Order ID'].str.split('-')[1]
-['CA', '2016', '152156']
-# Removinf extra spaces trim
+['CA', '2016', '152156]
+```
+
+### Removing extra spaces trim
+```py
 df['Order ID'].str.strip()
 0       CA-2016-152156
 1       CA-2016-152156
@@ -616,9 +628,13 @@ df['Order ID'].str.strip()
 9992    CA-2017-121258
 9993    CA-2017-119914
 Name: Order ID, Length: 9994, dtype: object
-# Concatenate
+```
+### Concatenate
+```py
 df['location'] = df['Country']+"_"+df["City"]
-# Upper and lower
+```
+### Upper and lower
+```py
 df['Category'].str.upper()
    
 0             FURNITURE
@@ -633,6 +649,7 @@ df['Category'].str.upper()
 9992    OFFICE SUPPLIES
 9993    OFFICE SUPPLIES
 Name: Category, Length: 9994, dtype: object
+
 df['Category'].str.lower()
    
 0             furniture
@@ -647,8 +664,10 @@ df['Category'].str.lower()
 9992    office supplies
 9993    office supplies
 Name: Category, Length: 9994, dtype: object
+```
 
-# Find
+### Find
+```py
 df['Category'].str.find('Fur')
    
 0       0
@@ -663,6 +682,7 @@ df['Category'].str.find('Fur')
 9992   -1
 9993   -1
 Name: Category, Length: 9994, dtype: int64
+
 df['Category'].str.find('Fur').replace(-1,'Not Found')
    
 0               0
@@ -677,33 +697,39 @@ df['Category'].str.find('Fur').replace(-1,'Not Found')
 9992    Not Found
 9993    Not Found
 Name: Category, Length: 9994, dtype: object
-
 ```
 
 # With conditions
 
 ```python
+#Dataframe to excel
 import os
 import pandas as pd
 
 os.chdir("D:\\Udemy\\Excel Automation") # changes working directory
 
 sales_data = pd.read_excel("sales_data.xlsx")
+```
 
-#countif
+### countif
+```py
 len(sales_data[sales_data["Quantity"] > 5])
 sales_data[sales_data["Quantity"] > 5].shape[0]
+```
 
-
-#countifs
+### countifs
+```py
 len(sales_data[(sales_data["State"]=="Kentucky") & (sales_data["Quantity"] > 5)])
 sales_data[(sales_data["State"]=="Kentucky") & (sales_data["Quantity"] > 5)].shape[0]
-
-#sumif
+```
+### sumif
+```py
 sales_data[sales_data["City"].str[:4]=="Fort"]["Profit"].sum()
 sales_data.loc[sales_data["City"].str[:4]=="Fort","Profit"].sum()
+```
 
-#sumifs
+### sumifs
+```py
 sales_data[(sales_data["City"].str[:4]=="Fort") & (sales_data["Quantity"] > 5)]["Profit"].sum()
 sales_data.loc[(sales_data["City"].str[:4]=="Fort") & (sales_data["Quantity"] > 5),"Profit"].sum()
 ```
