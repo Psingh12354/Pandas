@@ -733,3 +733,91 @@ sales_data.loc[sales_data["City"].str[:4]=="Fort","Profit"].sum()
 sales_data[(sales_data["City"].str[:4]=="Fort") & (sales_data["Quantity"] > 5)]["Profit"].sum()
 sales_data.loc[(sales_data["City"].str[:4]=="Fort") & (sales_data["Quantity"] > 5),"Profit"].sum()
 ```
+
+### loc & iloc [click here](https://discovery.cs.illinois.edu/guides/DataFrame-Fundamentals/dataframe-loc-vs-iloc/#:~:text=Difference%20Between%20loc%20and%20iloc,by%20one%20for%20each%20row)
+
+```py
+df.loc[0]
+Row ID                                             1
+Order ID                              CA-2016-152156
+Order Date                       2016-11-08 00:00:00
+Ship Date                        2016-11-11 00:00:00
+Ship Mode                               Second Class
+Customer ID                                 CG-12520
+Customer Name                            Claire Gute
+Segment                                     Consumer
+Country                                United States
+City                                       Henderson
+Postal Code                                    42420
+Region                                         South
+Product ID                           FUR-BO-10001798
+Category                                   Furniture
+Sub-Category                               Bookcases
+Product Name       Bush Somerset Collection Bookcase
+Sales                                         261.96
+Quantity                                           2
+Discount                                         0.0
+Profit                                       41.9136
+Per Units Sales                               130.98
+
+df.loc[0:10]
+    Row ID        Order ID Order Date  ... Discount    Profit Per Units Sales
+0        1  CA-2016-152156 2016-11-08  ...     0.00   41.9136        130.9800
+1        2  CA-2016-152156 2016-11-08  ...     0.00  219.5820        243.9800
+2        3  CA-2016-138688 2016-06-12  ...     0.00    6.8714          7.3100
+3        4  US-2015-108966 2015-10-11  ...     0.45 -383.0310        191.5155
+4        5  US-2015-108966 2015-10-11  ...     0.20    2.5164         11.1840
+5        6  CA-2014-115812 2014-06-09  ...     0.00   14.1694          6.9800
+6        7  CA-2014-115812 2014-06-09  ...     0.00    1.9656          1.8200
+7        8  CA-2014-115812 2014-06-09  ...     0.20   90.7152        151.1920
+8        9  CA-2014-115812 2014-06-09  ...     0.20    5.7825          6.1680
+9       10  CA-2014-115812 2014-06-09  ...     0.00   34.4700         22.9800
+10      11  CA-2014-115812 2014-06-09  ...     0.20   85.3092        189.5760
+
+df.iloc[[1,4]]
+   Row ID        Order ID Order Date  ... Discount    Profit Per Units Sales
+1       2  CA-2016-152156 2016-11-08  ...      0.0  219.5820         243.980
+4       5  US-2015-108966 2015-10-11  ...      0.2    2.5164          11.184
+
+# choosing specific column till certain range
+df.iloc[1:6,[1,4]]
+         Order ID       Ship Mode
+1  CA-2016-152156    Second Class
+2  CA-2016-138688    Second Class
+3  US-2015-108966  Standard Class
+4  US-2015-108966  Standard Class
+5  CA-2014-115812  Standard Class
+
+# choosing n row with slicing on column
+df.iloc[1:10,2:]
+  Order Date  Ship Date       Ship Mode  ... Discount    Profit Per Units Sales
+1 2016-11-08 2016-11-11    Second Class  ...     0.00  219.5820        243.9800
+2 2016-06-12 2016-06-16    Second Class  ...     0.00    6.8714          7.3100
+3 2015-10-11 2015-10-18  Standard Class  ...     0.45 -383.0310        191.5155
+4 2015-10-11 2015-10-18  Standard Class  ...     0.20    2.5164         11.1840
+5 2014-06-09 2014-06-14  Standard Class  ...     0.00   14.1694          6.9800
+6 2014-06-09 2014-06-14  Standard Class  ...     0.00    1.9656          1.8200
+7 2014-06-09 2014-06-14  Standard Class  ...     0.20   90.7152        151.1920
+8 2014-06-09 2014-06-14  Standard Class  ...     0.20    5.7825          6.1680
+9 2014-06-09 2014-06-14  Standard Class  ...     0.00   34.4700         22.9800
+
+# some condition
+df.loc[df['Ship Mode']=='Second Class']
+      Row ID        Order ID Order Date  ... Discount    Profit Per Units Sales
+0          1  CA-2016-152156 2016-11-08  ...      0.0   41.9136         130.980
+1          2  CA-2016-152156 2016-11-08  ...      0.0  219.5820         243.980
+2          3  CA-2016-138688 2016-06-12  ...      0.0    6.8714           7.310
+17        18  CA-2014-167164 2014-05-13  ...      0.0    9.9900          27.750
+18        19  CA-2014-143336 2014-08-27  ...      0.0    2.4824           4.280
+...      ...             ...        ...  ...      ...       ...             ...
+9965    9966  CA-2016-146374 2016-12-05  ...      0.0    2.3406           4.980
+9966    9967  CA-2016-146374 2016-12-05  ...      0.0   51.5543          15.670
+9980    9981  US-2015-151435 2015-09-06  ...      0.0   22.3548          85.980
+9989    9990  CA-2014-110422 2014-01-21  ...      0.2    4.1028           8.416
+
+# with 2 condition and(&)
+df.loc[(df['Region']=='South') & (df['Category']=='Furniture')]
+
+# with 2 condition or(|)
+df.loc[(df['Region']=='South') | (df['Category']=='Furniture')]
+```
