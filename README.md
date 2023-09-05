@@ -332,6 +332,8 @@ West     Furniture          11504.9503
          Office Supplies    52609.8490
          Technology         44303.6496
 Name: Profit, dtype: float64
+# to put some conditions while using group by like below code return abs mean
+df.groupby(['Region','Category'])['Profit'].apply(lambda x: abs(x.mean()))
 ```
 
 ### Assignment
