@@ -823,3 +823,16 @@ df.loc[(df['Region']=='South') & (df['Category']=='Furniture')]
 # with 2 condition or(|)
 df.loc[(df['Region']=='South') | (df['Category']=='Furniture')]
 ```
+
+### Matplotlib
+
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+flg = plt.figure()
+# it means we are creating axis starting from 0 to 1
+ax = flg.add_axes([0,0,1,1])
+x=np.arange(1,10)
+# we can see a simple plot by below code.
+ax.plot(x,x**2)
+```
