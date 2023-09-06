@@ -10,6 +10,8 @@
 - We can assign the column a same data type like ```df['Date'] = pd.to_datetime(df['Date'])```
 - The duplicated() method returns a Boolean values for each row: ```print(df.duplicated())```
 
+### Useful content
+- [Toward data science](https://towardsdatascience.com/pandas-equivalent-of-10-useful-sql-queries-f79428e60bd9)
 
 ```bash
 pip install markdown
