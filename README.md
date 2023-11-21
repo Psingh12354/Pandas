@@ -889,8 +889,21 @@ df.loc[:,['Profit','Order ID']].sort_values(by=['Order ID'],ascending=False)
 df.loc[:,['Profit','Order ID']].drop_duplicates()
 ```
 
-### Merging data of whole folder excel into one excel
+### Libraries required for all below
+```python
+import pandas as pd
+import os 
+import numpy as np
+import glob
+import subprocess,openpyxl
+from openpyxl import load_workbook
+import re
+from zipfile import ZipFile
+import os
 ```
+
+### Merging data of whole folder excel into one excel
+```python
 all_data = pd.DataFrame()
 # Specify the folder containing your Excel files
 folder_path = "C:\\\Python Merge" 
@@ -912,7 +925,7 @@ print("Data merged and saved to", output_file_path)
 ```
 
 ### Column wise split of data into multiple excel
-```
+```python
 #original
 package='Meta Split'
 data_df = pd.read_excel(r"C:\package15.xlsx",header=0,sheet_name='Attribute Level Metadata')
@@ -925,7 +938,7 @@ for data in grouped_df:
 ```
 
 ### Processing Jars using python
-```
+```python
 folder = 'C:\\Python Dup\\'
 jarFile = f'{folder}Jar File'
 base = f'{folder}excel\\template.xlsx'
@@ -945,7 +958,7 @@ for i in range(len(file_list)):
 
 ### Zipping multiple files in one go
 
-```
+```python
 import zipfile
 import os
  
@@ -965,7 +978,7 @@ if __name__ == "__main__":
 ```
 
 ### Comparing 2 folder and append the data if not exist in 2nd folder if exist it append
-```
+```python
 # package='Meta Split_4'
 # path=os.path.join("C:\\Merge",package)
 # os.mkdir(path)
@@ -997,6 +1010,6 @@ print(count)
 ```
 
 ### Get non distinct value in python
-```
+```python
 df1=df[df.duplicated(subset=['REPORT_NAME','ATTRIBUTE_NAME',keep=False)].drop_duplicates().sort_values('REPORT_NAME')
 ```
