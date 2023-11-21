@@ -888,3 +888,115 @@ df.loc[:,['Profit','Order ID']].sort_values(by=['Order ID'],ascending=False)
 ```python
 df.loc[:,['Profit','Order ID']].drop_duplicates()
 ```
+
+### Merging data of whole folder excel into one excel
+```
+all_data = pd.DataFrame()
+# Specify the folder containing your Excel files
+folder_path = "C:\\\Python Merge" 
+file_list = glob.glob(folder_path + "/*.xlsx")
+count = 0
+ 
+for i in file_list: 
+    print(i)
+    df = pd.read_excel(i, header=0, sheet_name='Attribute Level Metadata')
+    print('after if')
+    all_data = all_data._union(df, ignore_index=True)
+    print('all data')
+    count += 1
+print('outside loop')
+output_file_path = f"{folder_path}\\final.xlsx"
+all_data.to_excel(output_file_path, sheet_name='Sheet1', index=False)
+ 
+print("Data merged and saved to", output_file_path)
+```
+
+### Column wise split of data into multiple excel
+```
+#original
+package='Meta Split'
+data_df = pd.read_excel(r"C:\package15.xlsx",header=0,sheet_name='Attribute Level Metadata')
+parent = 'C:\\Chubb Jar COG\\pack\\'
+path=os.path.join(parent,package)
+os.mkdir(path)
+grouped_df = data_df.groupby('SPECIFICATION_PACKAGE')
+for data in grouped_df:
+    grouped_df.get_group(data[0]).to_excel(f"Chubb Jar COG\\pack\\{package}\\"+data[0]+".xlsx",index=False)
+```
+
+### Processing Jars using python
+```
+folder = 'C:\\Python Dup\\'
+jarFile = f'{folder}Jar File'
+base = f'{folder}excel\\template.xlsx'
+file_list = glob.glob(folder + "/*.zip")
+for i in range(len(file_list)):
+    data = file_list[i].split('.')[0]
+    wb=openpyxl.load_workbook(base)
+    output_excel = f'{data}.xlsx'
+    wb.save(output_excel)
+    print(output_excel)
+    try:
+        cmd = f'cmd /c java -jar "{jarFile}" "{file_list[i]}" "{output_excel}"'
+        subprocess.run(cmd,shell=True,check=True)
+    except Exception as e:
+        print(f'{data} {e}')
+```
+
+### Zipping multiple files in one go
+
+```
+import zipfile
+import os
+ 
+def zip_files_in_folder(folder_path):
+    for file_name in os.listdir(folder_path):
+        if file_name.endswith(".xml"):
+            file_name_1 = file_name.split('.')[0]
+            file_path = os.path.join(folder_path, file_name)
+            zip_file_path = os.path.join(folder_path, f"{file_name_1}.zip")
+ 
+            with zipfile.ZipFile(zip_file_path, 'w',zipfile.ZIP_DEFLATED) as zip_file:
+                zip_file.write(file_path, file_name)
+ 
+if __name__ == "__main__":
+    folder_path = "C:\\Python Dup"  # Replace with your actual folder path
+    zip_files_in_folder(folder_path)
+```
+
+### Comparing 2 folder and append the data if not exist in 2nd folder if exist it append
+```
+# package='Meta Split_4'
+# path=os.path.join("C:\\Merge",package)
+# os.mkdir(path)
+# file_list = os.listdir(folder_path)
+# file_list_1 = os.listdir(folder_path_1)
+folder_path = "C:\\Meta\\Meta Split_2"
+file_list = glob.glob(folder_path + "/*.xlsx")
+folder_path_1 = "C:\\Meta\\Meta Split_3"
+file_list_1 = glob.glob(folder_path_1 + "/*.xlsx")
+count=0
+for i in file_list:
+    data1 = i.split('\\')[-1].strip('.xlsx')
+    for j in file_list_1:
+        data2 = j.split('\\')[-1].strip('.xlsx')
+        if data1==data2:
+            count+=1
+            try:
+                df1 = pd.read_excel(i, header=0)
+                df2 = pd.read_excel(j, header=0)
+                df3 = df1._append(df2, ignore_index=True)
+                df3= df3.drop_duplicates()
+                path = f"C:\\Meta\\Meta Split_4\\{data2}.xlsx"
+                df3.to_excel(path, sheet_name='Sheet1', index=False)
+            except Exception as e:
+                print(e)
+        else:
+            print("else"+data2)
+print(count)
+```
+
+### Get non distinct value in python
+```
+df1=df[df.duplicated(subset=['REPORT_NAME','ATTRIBUTE_NAME',keep=False)].drop_duplicates().sort_values('REPORT_NAME')
+```
