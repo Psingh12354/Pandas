@@ -1013,3 +1013,88 @@ print(count)
 ```python
 df1=df[df.duplicated(subset=['REPORT_NAME','ATTRIBUTE_NAME',keep=False)].drop_duplicates().sort_values('REPORT_NAME')
 ```
+
+### Count
+```python
+df2 = pd.DataFrame(columns=['Package','Report_Count','Required Report'])
+file_list_1 = glob.glob('C:\dump' + "/*.xlsm")
+for i in file_list_1:
+    print(i)
+    file_name = i.split('\\')[-1]
+    file_name = re.sub('.xlsm','',file_name)
+    wb = openpyxl.load_workbook(i,read_only=True,keep_vba=True)
+    sheet = wb['Summary']
+    c7 = sheet['C7'].value
+    c9 = sheet['C9'].value
+    df2 = df2._append({'Package':file_name,'Report_Count':c7,'Required Report':c9},ignore_index=True)
+df2.to_excel(r'C:\\Report Count Sheet\\cog_count_9.xlsx',index=False)
+```
+
+### Report Duplicate handle 
+```python
+all_data = pd.DataFrame()
+ 
+# Specify the folder containing your Excel files
+folder_path = "C:\\testing 2.0"
+file_list = glob.glob(folder_path + "/*.xlsx")
+count = 0
+
+for i in file_list: 
+    print(i)
+    df = pd.read_excel(i, header=0, sheet_name='Attribute Level Metadata')
+    # print('after if')
+    # print(len(df))
+    # #print(df.columns.values)
+    # print("Report Name Unique Count : ",len(df['REPORT_NAME'].unique()))
+    # print("Report Description Unique Count : ",len(df['REPORT_DESCRIPTION'].unique()))
+    all_data=all_data.drop_duplicates()
+    df = df.drop_duplicates()
+    if 'REPORT_NAME' in all_data.columns:
+        # Update report names with the appropriate suffix for instances in the second file
+        report_names_set = set(all_data['REPORT_NAME'])
+    # Update report names with the appropriate suffix
+        for index, row in df.iterrows():
+            report_name = row['REPORT_NAME']
+            if report_name in report_names_set:
+                # suffix_count = list(df['REPORT_NAME']).count(report_name)
+                # suffix = '_1' if suffix_count==1 else f"_{suffix_count+1}"
+                df.at[index, 'REPORT_NAME'] += f"_1"
+                count=2
+                while True:
+                    if df.at[index, 'REPORT_NAME'] in report_names_set:
+                        df.at[index, 'REPORT_NAME'] += f"_{count}"
+                        print(df.at[index, 'REPORT_NAME'])
+                        count+=1
+                    else:
+                        break
+    all_data = all_data._append(df, ignore_index=True)
+    # print('all data')
+    # print(len(all_data))
+print('outside loop')
+#output_file_path = f"{folder_path}\\final.xlsx"
+output_file_path = f"{folder_path}"
+print("Unique REPORT_NAME in final package : ",len(all_data['REPORT_NAME'].unique()))
+print("Unique REPORT_DESCRIPTION in final package : ",len(all_data['REPORT_DESCRIPTION'].unique()))
+# row_limit = 1000000
+# with pd.ExcelWriter(output_file_path, engine='xlsxwriter') as writer:
+#     start_row=0
+#     for i in range(0, len(all_data), row_limit):
+#         df_chunk = all_data.iloc[i:i + row_limit]
+#         sheet_name = f'Sheet{i // row_limit + 1}'
+#         df_chunk.to_excel(writer, sheet_name=sheet_name, startrow=start_row, index=False, header=True)
+#         start_row += len(df_chunk) + 1
+
+rows_per_file = 1000000
+number_of_files = ((len(all_data)//rows_per_file))+1
+start_index=0
+end_index = rows_per_file
+for i in range(number_of_files):
+    filepart = f'{folder_path}\\final_{i}.xlsx'
+    writer = pd.ExcelWriter(filepart)
+    df_mod = all_data.iloc[start_index:end_index]
+    df_mod.to_excel(writer, index=False, sheet_name='sheet')
+    start_index = end_index
+    end_index = end_index + rows_per_file
+    writer.close()
+print("Data merged and saved to", output_file_path)
+```
