@@ -1098,3 +1098,87 @@ for i in range(number_of_files):
     writer.close()
 print("Data merged and saved to", output_file_path)
 ```
+
+### Updated above code to track the changes
+```
+all_data = pd.DataFrame()
+ 
+# Specify the folder containing your Excel files
+folder_path = "C:\\Testing New"
+file_list = glob.glob(folder_path + "/*.xlsx")
+count = 0
+df2 = pd.DataFrame(columns=['Package','Orig_Report_Name','New_Report_Name','Report_Desc','Specification_Pack'])
+for i in file_list: 
+    print(i)
+    df = pd.read_excel(i, header=0, sheet_name='Attribute Level Metadata')
+    # print('after if')
+    # print(len(df))
+    # #print(df.columns.values)
+    # print("Report Name Unique Count : ",len(df['REPORT_NAME'].unique()))
+    # print("Report Description Unique Count : ",len(df['REPORT_DESCRIPTION'].unique()))
+    all_data=all_data.drop_duplicates()
+    df = df.drop_duplicates()
+    file_name = i.split('\\')[-1]
+    file_name = re.sub('.xlsx','',file_name)
+    if 'REPORT_NAME' in all_data.columns:
+        # Update report names with the appropriate suffix for instances in the second file
+        report_names_set = set(all_data['REPORT_NAME'])
+    # Update report names with the appropriate suffix
+        for index, row in df.iterrows():
+            report_name = row['REPORT_NAME']
+            if report_name in report_names_set:
+                # suffix_count = list(df['REPORT_NAME']).count(report_name)
+                # suffix = '_1' if suffix_count==1 else f"_{suffix_count+1}"
+                # rep_var = df.at[index, 'REPORT_NAME']
+                #df.at[index, 'REPORT_NAME'] += f"_1"
+                # nrep_var = df.at[index, 'REPORT_NAME']
+                # report_desc = df.at[index,'REPORT_DESCRIPTION']
+                # attribute_agg = df.at[index,'ATTRIBUTE_AGGREGATION']
+                #df2 = df2._append({'Package':file_name,'Orig_Report_Name':rep_var,'New_Report_Name':nrep_var,'Specification_Pack':attribute_agg},ignore_index=True)
+                count=1
+                while True:
+                    if df.at[index, 'REPORT_NAME'] in report_names_set and count>1:
+                        df.at[index, 'REPORT_NAME']= df.at[index, 'REPORT_NAME'][:-2]+f"_{count}"
+                        # df.at[index, 'REPORT_NAME']+= f"_{count}"
+                        print('count 2',df.at[index, 'REPORT_NAME'])
+                        rep_var = df.at[index, 'REPORT_NAME']
+                        nrep_var = df.at[index, 'REPORT_NAME']
+                        report_desc = df.at[index,'REPORT_DESCRIPTION']
+                        attribute_agg = df.at[index,'ATTRIBUTE_AGGREGATION']
+                        df2 = df2._append({'Package':file_name,'Orig_Report_Name':rep_var,'New_Report_Name':nrep_var,'Report_Desc':report_desc,'Specification_Pack':attribute_agg},ignore_index=True)
+                        count+=1
+                    elif df.at[index, 'REPORT_NAME'] in report_names_set and count==1:
+                        df.at[index, 'REPORT_NAME'] += f"_1"
+                        print('count 1',df.at[index, 'REPORT_NAME'])
+                        nrep_var = df.at[index, 'REPORT_NAME']
+                        nrep_var = df.at[index, 'REPORT_NAME']
+                        report_desc = df.at[index,'REPORT_DESCRIPTION']
+                        attribute_agg = df.at[index,'ATTRIBUTE_AGGREGATION']
+                        df2 = df2._append({'Package':file_name,'Orig_Report_Name':rep_var,'New_Report_Name':nrep_var,'Report_Desc':report_desc,'Specification_Pack':attribute_agg},ignore_index=True)
+                        count+=1
+                    else:
+                        break
+    all_data = all_data._append(df, ignore_index=True)
+    # print('all data')
+    # print(len(all_data))
+print('outside loop')
+#output_file_path = f"{folder_path}\\final.xlsx"
+output_file_path = f"{folder_path}"
+print("Unique REPORT_NAME in final package : ",len(all_data['REPORT_NAME'].unique()))
+print("Unique REPORT_DESCRIPTION in final package : ",len(all_data['REPORT_DESCRIPTION'].unique()))
+df2.to_excel(r'C:\\Testing New\change.xlsx',index=False)
+print('change sheet generated')
+rows_per_file = 1000000
+number_of_files = ((len(all_data)//rows_per_file))+1
+start_index=0
+end_index = rows_per_file
+for i in range(number_of_files):
+    filepart = f'{folder_path}\\final_{i}.xlsx'
+    writer = pd.ExcelWriter(filepart)
+    df_mod = all_data.iloc[start_index:end_index]
+    df_mod.to_excel(writer, index=False, sheet_name='sheet')
+    start_index = end_index
+    end_index = end_index + rows_per_file
+    writer.close()
+print("Data merged and saved to", output_file_path)
+```
