@@ -1100,7 +1100,7 @@ print("Data merged and saved to", output_file_path)
 ```
 
 ### Updated above code to track the changes
-```
+```python
 all_data = pd.DataFrame()
  
 # Specify the folder containing your Excel files
