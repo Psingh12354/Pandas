@@ -1182,3 +1182,58 @@ for i in range(number_of_files):
     writer.close()
 print("Data merged and saved to", output_file_path)
 ```
+
+### Unzipping group of file by passing folder location
+
+```python
+import zipfile
+import os
+def zip_files_in_folder(folder_path):
+    for file_name in os.listdir(folder_path):
+        if file_name.endswith(".zip"):
+            file_name_1 = file_name.split('.')[0]
+            file_path = os.path.join(folder_path, file_name)
+            zip_file_path = os.path.join(folder_path, f"{file_name_1}.zip")
+            with zipfile.ZipFile(zip_file_path, 'r') as zip_file:
+                zip_file.extractall(folder_path)
+ 
+if __name__ == "__main__":
+    folder_path = "C:\\miss"  # Replace with your actual folder path
+    zip_files_in_folder(folder_path)
+```
+
+### Extracting data(Schema) from specific file type like sql
+
+```python
+import os
+import glob
+import re
+import pandas as pd
+folder = 'C:\\Scripts\\'
+# file_list = glob.glob(folder + "/*.type")
+# for i in file_list:
+#     f = open(i, 'r')
+#     srclist = f.readlines()
+df = pd.DataFrame(columns=['Script Name','Schema Name','Table/View Name'])
+file_list = glob.glob(folder + "/*.type")
+for k in file_list:
+    f = open(k, 'r')
+    file_name = k.split('\\')[-1]
+    file_name = re.sub('.btq','',file_name)
+    srclist = f.readlines()
+    lis = ['from','FROM','INSERT','delete','DELETE','insert','UPDATE','update','join','JOIN']
+    flag = 0
+    for i in range(len(srclist)):
+        line = srclist[i].strip()
+        found = [line for value in lis if str(value) in line]
+        if len(found)>0:
+            for j in found:
+                pattern = re.compile(r'\b\w+\.\w+\b')
+                result = re.search(pattern,j)
+                if result!=None:
+                    var = result.group()
+                    schema = var.split('.')[0].strip()
+                    table = var.split('.')[-1].strip()
+                    df = df._append({'Script Name':file_name,'Schema Name':schema,'Table/View Name':table},ignore_index=True)
+df.to_excel(r'C:\\BTEQ_Scripts\\output2.xlsx',index=False)
+```
