@@ -1237,3 +1237,18 @@ for k in file_list:
                     df = df._append({'Script Name':file_name,'Schema Name':schema,'Table/View Name':table},ignore_index=True)
 df.to_excel(r'C:\\BTEQ_Scripts\\output2.xlsx',index=False)
 ```
+
+### To get a list of file inside multiple dir
+```
+path = 'C:\\folder'
+for root,dirs,files in os.walk(path):
+    # print("\nroot "+str(root))
+    # print("dirs "+str(dirs))
+    # print("file "+str(file))
+    lis = ['sample_dir']
+    if any(folder in root for folder in lis):
+        for file in files: 
+            if file.endswith('.csv'):
+                file_path = os.path.join(root,file)
+                print(file_path)
+```
