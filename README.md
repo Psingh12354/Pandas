@@ -929,12 +929,12 @@ print("Data merged and saved to", output_file_path)
 #original
 package='Meta Split'
 data_df = pd.read_excel(r"C:\package15.xlsx",header=0,sheet_name='Attribute Level Metadata')
-parent = 'C:\\Chubb Jar COG\\pack\\'
+parent = 'C:\\Loc\\pack\\'
 path=os.path.join(parent,package)
 os.mkdir(path)
 grouped_df = data_df.groupby('SPECIFICATION_PACKAGE')
 for data in grouped_df:
-    grouped_df.get_group(data[0]).to_excel(f"Chubb Jar COG\\pack\\{package}\\"+data[0]+".xlsx",index=False)
+    grouped_df.get_group(data[0]).to_excel(f"Loc\\pack\\{package}\\"+data[0]+".xlsx",index=False)
 ```
 
 ### Processing Jars using python
@@ -1027,7 +1027,7 @@ for i in file_list_1:
     c7 = sheet['C7'].value
     c9 = sheet['C9'].value
     df2 = df2._append({'Package':file_name,'Report_Count':c7,'Required Report':c9},ignore_index=True)
-df2.to_excel(r'C:\\Report Count Sheet\\cog_count_9.xlsx',index=False)
+df2.to_excel(r'C:\\Report Count Sheet\\count_9.xlsx',index=False)
 ```
 
 ### Report Duplicate handle 
