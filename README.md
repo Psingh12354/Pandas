@@ -1265,7 +1265,7 @@ df.to_excel(r'C:\\BTEQ_Scripts\\output2.xlsx',index=False)
 ```
 
 ### To get a list of file inside multiple dir
-```
+```python
 path = 'C:\\folder'
 for root,dirs,files in os.walk(path):
     # print("\nroot "+str(root))
