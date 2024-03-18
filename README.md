@@ -432,8 +432,19 @@ lis = [1,2,3,4,5,6]
 head,a,*tail = lis
 print(head)
 print(tail)
+
+output
 1 2
 [3, 4, 5, 6]
+
+lis = [1,2,3,4,5,6]
+*head,tail = lis
+print(head)
+print(tail)
+
+output
+[1, 2, 3, 4, 5]
+6
 ```
 ### To list down all file in multiple folder according to there name pattern.
 ```python
