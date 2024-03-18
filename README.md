@@ -426,6 +426,15 @@ filenames = glob.glob('*2016*')
 glob.glob(cwd+'\\*\\*\\*.xlsx')
 ```
 
+### Tricks
+```
+lis = [1,2,3,4,5,6]
+head,a,*tail = lis
+print(head)
+print(tail)
+1 2
+[3, 4, 5, 6]
+```
 ### To list down all file in multiple folder according to there name pattern.
 ```python
 import os
