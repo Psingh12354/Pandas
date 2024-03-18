@@ -9,6 +9,12 @@
 - The fillna() method allows us to replace empty cells with a value ```df.fillna(130, inplace = True)```
 - We can assign the column a same data type like ```df['Date'] = pd.to_datetime(df['Date'])```
 - The duplicated() method returns a Boolean values for each row: ```print(df.duplicated())```
+- Use _ as placeholder to store value which you are going to ignore. In below example it will ignore 2nd index
+```python
+tup = ('Priyanshu',23,'PA')
+name,_,desig = tup
+print(name,_,desig)
+```
 
 ### Useful content
 - [Toward data science](https://towardsdatascience.com/pandas-equivalent-of-10-useful-sql-queries-f79428e60bd9)
@@ -427,7 +433,7 @@ glob.glob(cwd+'\\*\\*\\*.xlsx')
 ```
 
 ### Tricks
-```
+```python
 lis = [1,2,3,4,5,6]
 head,a,*tail = lis
 print(head)
