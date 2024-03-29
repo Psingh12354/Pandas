@@ -9,6 +9,7 @@
 - The fillna() method allows us to replace empty cells with a value ```df.fillna(130, inplace = True)```
 - We can assign the column a same data type like ```df['Date'] = pd.to_datetime(df['Date'])```
 - The duplicated() method returns a Boolean values for each row: ```print(df.duplicated())```
+- To check which file you are in ```print(__main__)```
 - Use _ as placeholder to store value which you are going to ignore. In below example it will ignore 2nd index
 ```python
 tup = ('Priyanshu',23,'PA')
@@ -1277,4 +1278,13 @@ for root,dirs,files in os.walk(path):
             if file.endswith('.csv'):
                 file_path = os.path.join(root,file)
                 print(file_path)
+```
+
+### Type listing in python
+
+```python
+from typing import List
+def lis_avg(seq: List) -> float:
+    return sum(seq)/len(seq)
+print(lis_avg(1,2,3))
 ```
