@@ -1038,7 +1038,7 @@ print(count)
 
 ### Get non distinct value in python
 ```python
-df1=df[df.duplicated(subset=['REPORT_NAME','ATTRIBUTE_NAME',keep=False)].drop_duplicates().sort_values('REPORT_NAME')
+df1=df[df.duplicated(subset=['COL_NAME','ATTRIBUTE_NAME',keep=False)].drop_duplicates().sort_values('COL_NAME')
 ```
 
 ### Count
@@ -1072,25 +1072,25 @@ for i in file_list:
     # print('after if')
     # print(len(df))
     # #print(df.columns.values)
-    # print("Report Name Unique Count : ",len(df['REPORT_NAME'].unique()))
+    # print("Report Name Unique Count : ",len(df['COL_NAME'].unique()))
     # print("Report Description Unique Count : ",len(df['REPORT_DESCRIPTION'].unique()))
     all_data=all_data.drop_duplicates()
     df = df.drop_duplicates()
-    if 'REPORT_NAME' in all_data.columns:
+    if 'COL_NAME' in all_data.columns:
         # Update report names with the appropriate suffix for instances in the second file
-        report_names_set = set(all_data['REPORT_NAME'])
+        COL_NAMEs_set = set(all_data['COL_NAME'])
     # Update report names with the appropriate suffix
         for index, row in df.iterrows():
-            report_name = row['REPORT_NAME']
-            if report_name in report_names_set:
-                # suffix_count = list(df['REPORT_NAME']).count(report_name)
+            COL_NAME = row['COL_NAME']
+            if COL_NAME in COL_NAMEs_set:
+                # suffix_count = list(df['COL_NAME']).count(COL_NAME)
                 # suffix = '_1' if suffix_count==1 else f"_{suffix_count+1}"
-                df.at[index, 'REPORT_NAME'] += f"_1"
+                df.at[index, 'COL_NAME'] += f"_1"
                 count=2
                 while True:
-                    if df.at[index, 'REPORT_NAME'] in report_names_set:
-                        df.at[index, 'REPORT_NAME'] += f"_{count}"
-                        print(df.at[index, 'REPORT_NAME'])
+                    if df.at[index, 'COL_NAME'] in COL_NAMEs_set:
+                        df.at[index, 'COL_NAME'] += f"_{count}"
+                        print(df.at[index, 'COL_NAME'])
                         count+=1
                     else:
                         break
@@ -1100,7 +1100,7 @@ for i in file_list:
 print('outside loop')
 #output_file_path = f"{folder_path}\\final.xlsx"
 output_file_path = f"{folder_path}"
-print("Unique REPORT_NAME in final package : ",len(all_data['REPORT_NAME'].unique()))
+print("Unique COL_NAME in final package : ",len(all_data['COL_NAME'].unique()))
 print("Unique REPORT_DESCRIPTION in final package : ",len(all_data['REPORT_DESCRIPTION'].unique()))
 # row_limit = 1000000
 # with pd.ExcelWriter(output_file_path, engine='xlsxwriter') as writer:
@@ -1134,54 +1134,54 @@ all_data = pd.DataFrame()
 folder_path = "C:\\Testing New"
 file_list = glob.glob(folder_path + "/*.xlsx")
 count = 0
-df2 = pd.DataFrame(columns=['Package','Orig_Report_Name','New_Report_Name','Report_Desc','Specification_Pack'])
+df2 = pd.DataFrame(columns=['Package','Orig_COL_NAME','New_COL_NAME','Report_Desc','Specification_Pack'])
 for i in file_list: 
     print(i)
     df = pd.read_excel(i, header=0, sheet_name='Attribute Level Metadata')
     # print('after if')
     # print(len(df))
     # #print(df.columns.values)
-    # print("Report Name Unique Count : ",len(df['REPORT_NAME'].unique()))
+    # print("Report Name Unique Count : ",len(df['COL_NAME'].unique()))
     # print("Report Description Unique Count : ",len(df['REPORT_DESCRIPTION'].unique()))
     all_data=all_data.drop_duplicates()
     df = df.drop_duplicates()
     file_name = i.split('\\')[-1]
     file_name = re.sub('.xlsx','',file_name)
-    if 'REPORT_NAME' in all_data.columns:
+    if 'COL_NAME' in all_data.columns:
         # Update report names with the appropriate suffix for instances in the second file
-        report_names_set = set(all_data['REPORT_NAME'])
+        COL_NAMEs_set = set(all_data['COL_NAME'])
     # Update report names with the appropriate suffix
         for index, row in df.iterrows():
-            report_name = row['REPORT_NAME']
-            if report_name in report_names_set:
-                # suffix_count = list(df['REPORT_NAME']).count(report_name)
+            COL_NAME = row['COL_NAME']
+            if COL_NAME in COL_NAMEs_set:
+                # suffix_count = list(df['COL_NAME']).count(COL_NAME)
                 # suffix = '_1' if suffix_count==1 else f"_{suffix_count+1}"
-                # rep_var = df.at[index, 'REPORT_NAME']
-                #df.at[index, 'REPORT_NAME'] += f"_1"
-                # nrep_var = df.at[index, 'REPORT_NAME']
+                # rep_var = df.at[index, 'COL_NAME']
+                #df.at[index, 'COL_NAME'] += f"_1"
+                # nrep_var = df.at[index, 'COL_NAME']
                 # report_desc = df.at[index,'REPORT_DESCRIPTION']
                 # attribute_agg = df.at[index,'ATTRIBUTE_AGGREGATION']
-                #df2 = df2._append({'Package':file_name,'Orig_Report_Name':rep_var,'New_Report_Name':nrep_var,'Specification_Pack':attribute_agg},ignore_index=True)
+                #df2 = df2._append({'Package':file_name,'Orig_COL_NAME':rep_var,'New_COL_NAME':nrep_var,'Specification_Pack':attribute_agg},ignore_index=True)
                 count=1
                 while True:
-                    if df.at[index, 'REPORT_NAME'] in report_names_set and count>1:
-                        df.at[index, 'REPORT_NAME']= df.at[index, 'REPORT_NAME'][:-2]+f"_{count}"
-                        # df.at[index, 'REPORT_NAME']+= f"_{count}"
-                        print('count 2',df.at[index, 'REPORT_NAME'])
-                        rep_var = df.at[index, 'REPORT_NAME']
-                        nrep_var = df.at[index, 'REPORT_NAME']
+                    if df.at[index, 'COL_NAME'] in COL_NAMEs_set and count>1:
+                        df.at[index, 'COL_NAME']= df.at[index, 'COL_NAME'][:-2]+f"_{count}"
+                        # df.at[index, 'COL_NAME']+= f"_{count}"
+                        print('count 2',df.at[index, 'COL_NAME'])
+                        rep_var = df.at[index, 'COL_NAME']
+                        nrep_var = df.at[index, 'COL_NAME']
                         report_desc = df.at[index,'REPORT_DESCRIPTION']
                         attribute_agg = df.at[index,'ATTRIBUTE_AGGREGATION']
-                        df2 = df2._append({'Package':file_name,'Orig_Report_Name':rep_var,'New_Report_Name':nrep_var,'Report_Desc':report_desc,'Specification_Pack':attribute_agg},ignore_index=True)
+                        df2 = df2._append({'Package':file_name,'Orig_COL_NAME':rep_var,'New_COL_NAME':nrep_var,'Report_Desc':report_desc,'Specification_Pack':attribute_agg},ignore_index=True)
                         count+=1
-                    elif df.at[index, 'REPORT_NAME'] in report_names_set and count==1:
-                        df.at[index, 'REPORT_NAME'] += f"_1"
-                        print('count 1',df.at[index, 'REPORT_NAME'])
-                        nrep_var = df.at[index, 'REPORT_NAME']
-                        nrep_var = df.at[index, 'REPORT_NAME']
+                    elif df.at[index, 'COL_NAME'] in COL_NAMEs_set and count==1:
+                        df.at[index, 'COL_NAME'] += f"_1"
+                        print('count 1',df.at[index, 'COL_NAME'])
+                        nrep_var = df.at[index, 'COL_NAME']
+                        nrep_var = df.at[index, 'COL_NAME']
                         report_desc = df.at[index,'REPORT_DESCRIPTION']
                         attribute_agg = df.at[index,'ATTRIBUTE_AGGREGATION']
-                        df2 = df2._append({'Package':file_name,'Orig_Report_Name':rep_var,'New_Report_Name':nrep_var,'Report_Desc':report_desc,'Specification_Pack':attribute_agg},ignore_index=True)
+                        df2 = df2._append({'Package':file_name,'Orig_COL_NAME':rep_var,'New_COL_NAME':nrep_var,'Report_Desc':report_desc,'Specification_Pack':attribute_agg},ignore_index=True)
                         count+=1
                     else:
                         break
@@ -1191,7 +1191,7 @@ for i in file_list:
 print('outside loop')
 #output_file_path = f"{folder_path}\\final.xlsx"
 output_file_path = f"{folder_path}"
-print("Unique REPORT_NAME in final package : ",len(all_data['REPORT_NAME'].unique()))
+print("Unique COL_NAME in final package : ",len(all_data['COL_NAME'].unique()))
 print("Unique REPORT_DESCRIPTION in final package : ",len(all_data['REPORT_DESCRIPTION'].unique()))
 df2.to_excel(r'C:\\Testing New\change.xlsx',index=False)
 print('change sheet generated')
