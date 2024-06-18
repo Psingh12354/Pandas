@@ -1288,3 +1288,23 @@ def lis_avg(seq: List) -> float:
     return sum(seq)/len(seq)
 print(lis_avg(1,2,3))
 ```
+
+### Insert multiple header & insert data into given column
+
+```python
+workbook = openpyxl.Workbook()
+sheet = workbook.active
+headers = ['A','B','C','D']
+
+for col_num, header in enumerate(headers, start=1):
+    sheet.cell(row=1, column=col_num, value=header)
+for i, (value_A, value_B, value_D) in enumerate(zip(list_A, list_B, list_D), start=2):
+    sheet.cell(row=i, column=1, value=value_A)  
+    sheet.cell(row=i, column=2, value=value_B)  
+    sheet.cell(row=i, column=4, value=value_D)  
+
+file_name = 'data_with_columns.xlsx'
+folder_loc = 'C:\\folder\\'
+workbook.save(f'{folder_loc}{file_name}')
+print(f"Data written to {file_name}")
+```
